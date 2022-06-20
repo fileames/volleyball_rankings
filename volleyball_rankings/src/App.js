@@ -105,6 +105,11 @@ function App() {
         </div>
           <div class="row">
             <div class="col-sm">
+              <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData}/>
+              <button className='btn btn-primary' onClick={calculate}>Calculate New Scores</button>
+
+            </div>
+            <div class="col-sm">
               <table class="table table-hover">
                  <thead>
                   <tr>
@@ -124,11 +129,7 @@ function App() {
                 </tbody>
             </table>
             </div>
-            <div class="col-sm">
-              <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData}/>
-              <button className='btn btn-primary' onClick={calculate}>Calculate New Scores</button>
-
-            </div>
+            
           </div>
         </div>
     </div>
