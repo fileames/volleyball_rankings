@@ -8,14 +8,18 @@ r = requests.get(URL)
 soup = BeautifulSoup(r.content, 'html.parser')
 table = soup.find('table', attrs={'class': 'ranking_table'})
 
-countries = dict()
+countries = []
 for i, row in enumerate(table.findAll('tr')):
     if i == 0:
         continue
 
+    item = dict()
+
     country = row.findAll('td')[3].text
     point = int(row.findAll('td')[4].text)
-    countries[country] = point
+    item["country"] = country
+    item["point"] = point
+    countries.append(item)
 
-with open('data/ranking_data.json', 'w') as fp:
+with open('volleyball_rankings/src/data/ranking_data.json', 'w') as fp:
     json.dump(countries, fp)
