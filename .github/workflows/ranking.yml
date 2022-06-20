@@ -2,7 +2,7 @@ name: ranking
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # runs at 12:00 UTC everyday
+    - cron: '*/15 * * * *' # runs every 15 minutes
 
 jobs:
   build:
