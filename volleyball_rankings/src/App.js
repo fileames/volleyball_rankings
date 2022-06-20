@@ -60,15 +60,15 @@ function App() {
       var team1 = match.team1
       var team2 = match.team2
       var score = match.score
-      console.log(match)
 
-      var delta = 8*(realCountryData[team1] - realCountryData[team2])/ 1000
-      console.log(delta)
+      var delta = 8*(clone[team1] - clone[team2])/ 1000
       var Ps = [0,0,0,0,0,0]
       var norms = [0,0,0,0,0,0]
 
       for (let i = 0; i < 5; i++) {
         norms[i+1] = cdfNormal(C[i] + delta);
+        console.log(C[i] + delta);
+        console.log(norms[i+1]);
       }
       norms.push(1)
 
@@ -79,11 +79,8 @@ function App() {
       }
 
       var exp = sum(dotMultiply(scores, Ps));
-      console.log(exp);
       var WR = scores[parseInt(score)] - exp;
-      console.log(WR);
       var point = WR*MWF/8;
-      console.log(point);
 
       clone[team1] = clone[team1] + point;
       clone[team2] = clone[team2] - point;
