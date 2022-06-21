@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react"
 import TableRows from "./TableRows"
 
-function AddDeleteTableRows({countryList, rowsData, setRowsData}){
+function AddDeleteTableRows({countryList, rowsData, setRowsData,setMWF,MWF}){
     //const [rowsData, setRowsData] = useState([]);
  
     const addTableRows = ()=>{
@@ -14,7 +14,7 @@ function AddDeleteTableRows({countryList, rowsData, setRowsData}){
         setRowsData([...rowsData, rowsInput])
       
     }
-    
+
    const deleteTableRows = (index)=>{
         const rows = [...rowsData];
         rows.splice(index, 1);
@@ -27,20 +27,36 @@ function AddDeleteTableRows({countryList, rowsData, setRowsData}){
     const rowsInput = [...rowsData];
     rowsInput[index][name] = value;
     setRowsData(rowsInput);
-  
- 
- 
-}
+    }
 
-useEffect(() => {
-    console.log(rowsData);
-  }, [rowsData]);
+    const handleTournamentChange = (evnt)=>{
+        setMWF(parseFloat(evnt.target.value));
+    }
+
 
     return(
         <div className="container">
             <div className="row">
                 <div className="col-sm-12">
+                    <h5>Select The Tournament</h5>
+                    <select
+                    value={MWF}
+                    onChange={handleTournamentChange} name="tournament" className="form-control"
+                    >
+                        <option value={"50"} >{"Olympic Games"}</option>
+                        <option value={"45"} >{"World Championship"}</option>
+                        <option value={"40"} >{"Volleyball Nations League"}</option>
+                        <option value={"35"} >{"OQTs / World Cup"}</option>
+                        <option value={"35"} >{"Continental Championship"}</option>
+                        <option value={"20"} >{"Volleyball Challenger Cup"}</option>     
+                        <option value={"17.5"} >{"Continental Championship QT"}</option>   
+                        <option value={"10"} >{"Other annual official events"}</option>                      
+                    </select>
+                    <div className="mt-5 mb-5">
+
+                    </div>
                 <table className="table">
+                    
                     <thead>
                       <tr>
                           <th>First Team</th>

@@ -10,11 +10,11 @@ function App() {
 
   var C = [-1.060, -0.364, 0, 0.364, 1.060];
   var scores = [2,1.5,1,-1,-1.5,-2];
-  var MWF = 40;
   const [realCountryData, setRealCountryData] = useState(new Object());
   const [countryData, setCountryData] = useState(new Object());
   const [countryList, setCountryList] = useState([]);
   const [rowsData, setRowsData] = useState([]);
+  const [MWF, setMWF] = useState(50);
 
   useEffect(() => {
     var dict = new Object();
@@ -52,7 +52,6 @@ function App() {
 
 
   const calculate = ()=>{ 
-    console.log("hey")
     const clone = structuredClone(realCountryData);
 
     for(var match_i in rowsData){
@@ -67,8 +66,7 @@ function App() {
 
       for (let i = 0; i < 5; i++) {
         norms[i+1] = cdfNormal(C[i] + delta);
-        console.log(C[i] + delta);
-        console.log(norms[i+1]);
+
       }
       norms.push(1)
 
@@ -105,7 +103,7 @@ function App() {
         </div>
           <div class="row">
             <div class="col-sm">
-              <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData}/>
+              <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData} setMWF={setMWF} MWF={MWF}/>
               <button className='btn btn-primary' onClick={calculate}>Calculate New Scores</button>
 
             </div>
@@ -123,7 +121,7 @@ function App() {
                 <tbody>
                 {
                     Object.keys(countryData).map((key, index) => {
-                        return <tr key={index}><th scope="row">{index}</th><td>{key}</td> <td>{Math.round(realCountryData[key])}</td> <td>{Math.round(countryData[key])}</td> <td style={{color: countColor(countryData[key] - realCountryData[key])}}>{(countryData[key] - realCountryData[key]).toFixed(3)}</td></tr>
+                        return <tr key={index+1}><th scope="row">{index+1}</th><td>{key}</td> <td>{Math.round(realCountryData[key])}</td> <td>{Math.round(countryData[key])}</td> <td style={{color: countColor(countryData[key] - realCountryData[key])}}>{(countryData[key] - realCountryData[key]).toFixed(3)}</td></tr>
                     })
                 }
                 </tbody>
