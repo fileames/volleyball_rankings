@@ -1,7 +1,10 @@
 import './App.css';
 import { useEffect, useState } from "react"
 import $ from 'jquery'; 
-import data from './data/ranking_data.json'
+import women_data from './data/women_ranking_data.json'
+import men_data from './data/men_ranking_data.json'
+import last_time from './data/last_time.json'
+
 import AddDeleteTableRows from "./components/AddDeleteTableRows";
 import { erf, dotMultiply, sum } from 'mathjs'
 
@@ -10,23 +13,43 @@ function App() {
 
   var C = [-1.060, -0.364, 0, 0.364, 1.060];
   var scores = [2,1.5,1,-1,-1.5,-2];
+  let timestamp = timeConverter(last_time.last_checked)
+
   const [realCountryData, setRealCountryData] = useState(new Object());
+  const [realMenData, setRealMenData] = useState(new Object());
+  const [realWomenData, setRealWomenData] = useState(new Object());
+  const [currentGender, setCurrentGender] = useState("Women");
   const [countryData, setCountryData] = useState(new Object());
   const [countryList, setCountryList] = useState([]);
+  const [menCountryList, setMenCountryList] = useState([]);
+  const [womenCountryList, setWomenCountryList] = useState([]);
   const [rowsData, setRowsData] = useState([]);
   const [MWF, setMWF] = useState(50);
 
   useEffect(() => {
     var dict = new Object();
-    var countryListTemp = []
-      for(let i = 0; i < data.length; i++) {
-        let item = data[i];
-        dict[item.country] = item.point;
-        countryListTemp.push(item.country)
-      }
-      setCountryData(dict);
-      setRealCountryData(dict);
-      setCountryList(countryListTemp);
+    var countryListTemp = [];
+    for(let i = 0; i < women_data.length; i++) {
+      let item = women_data[i];
+      dict[item.country] = item.point;
+      countryListTemp.push(item.country)
+    }
+    setCountryData(dict);
+    setRealCountryData(dict);
+    setCountryList(countryListTemp);
+    setRealWomenData(dict);
+    setWomenCountryList(countryListTemp);
+
+    var mendict = new Object();
+    var mencountryListTemp = [];
+    for(let i = 0; i < men_data.length; i++) {
+      let item = men_data[i];
+      mendict[item.country] = item.point;
+      mencountryListTemp.push(item.country)
+    }
+    setRealMenData(mendict);
+    setMenCountryList(mencountryListTemp);
+
   }, []);
 
 
@@ -93,21 +116,53 @@ function App() {
     else if (count === 0) return "black";
   }; 
 
+  const changeGender = () => {
+    if(currentGender == "Women"){
+      setCurrentGender("Men");
+      setRealCountryData(realMenData);
+      setCountryData(realMenData);
+      setCountryList(menCountryList);
+    }
+    else{
+      setCurrentGender("Women");
+      setRealCountryData(realWomenData);
+      setCountryData(realWomenData);
+      setCountryList(womenCountryList);
+    }
+  }; 
+
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
+
   return (
     <div className="App">
       
       <div class="container">
         <div class="row mt-4 mb-4">
-          <h2>Volleyball Rankings</h2>
-
+          <h4 className='display-4'>FIVB {currentGender}'s Volleyball Rankings</h4>
+          <div className="mt-2 mb-2"></div>
+          <div className="col-sm-12"><button className='btn btn-secondary' onClick={changeGender}>Change Gender</button></div>
         </div>
           <div class="row">
             <div class="col-sm">
+              
+              <div className="mt-5 mb-5"></div>
               <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData} setMWF={setMWF} MWF={MWF}/>
               <button className='btn btn-primary' onClick={calculate}>Calculate New Scores</button>
-
+              <div className="mt-5 mb-5"></div>
             </div>
             <div class="col-sm">
+              <p>Last update: {timestamp}</p>
               <table class="table table-hover">
                  <thead>
                   <tr>
