@@ -52,14 +52,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main  
           
-      - name: Build
-        run: npm run build
-        
-      - name: deploy
+      - name: Build and deploy
         run: |
+          cd volleyball_rankings
+          npm run build
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
           git commit -m "update deploy" -a
-          cd volleyball_rankings
           npm run deploy
