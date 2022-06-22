@@ -56,6 +56,5 @@ jobs:
           npm install
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A
-          git commit -m "update deploy" -a
+          
           npm run deploy
