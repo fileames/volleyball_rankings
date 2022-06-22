@@ -3,51 +3,30 @@ from bs4 import BeautifulSoup
 import json
 import time
 
+URLS = ["https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=women",
+        "https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=men"]
 
-URL = "https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=women"
+for i, j in enumerate(["women", "men"]):
 
-URL_men = "https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=men"
+    r = requests.get(URLS[i])
+    soup = BeautifulSoup(r.content, 'html.parser')
+    table = soup.find('table', attrs={'class': 'ranking_table'})
 
-r = requests.get(URL)
-soup = BeautifulSoup(r.content, 'html.parser')
-table = soup.find('table', attrs={'class': 'ranking_table'})
+    countries = []
+    for i, row in enumerate(table.findAll('tr')):
+        if i == 0:
+            continue
 
-countries = []
-for i, row in enumerate(table.findAll('tr')):
-    if i == 0:
-        continue
+        item = dict()
 
-    item = dict()
+        country = row.findAll('td')[3].text
+        point = int(row.findAll('td')[4].text)
+        item["country"] = country
+        item["point"] = point
+        countries.append(item)
 
-    country = row.findAll('td')[3].text
-    point = int(row.findAll('td')[4].text)
-    item["country"] = country
-    item["point"] = point
-    countries.append(item)
-
-with open('volleyball_rankings/src/data/women_ranking_data.json', 'w') as fp:
-    json.dump(countries, fp)
-
-
-r = requests.get(URL_men)
-soup = BeautifulSoup(r.content, 'html.parser')
-table = soup.find('table', attrs={'class': 'ranking_table'})
-
-countries = []
-for i, row in enumerate(table.findAll('tr')):
-    if i == 0:
-        continue
-
-    item = dict()
-
-    country = row.findAll('td')[3].text
-    point = int(row.findAll('td')[4].text)
-    item["country"] = country
-    item["point"] = point
-    countries.append(item)
-
-with open('volleyball_rankings/src/data/men_ranking_data.json', 'w') as fp:
-    json.dump(countries, fp)
+    with open(f'volleyball_rankings/src/data/{j}_ranking_data.json', 'w') as fp:
+        json.dump(countries, fp)
 
 with open('volleyball_rankings/src/data/last_time.json', 'w') as fp:
     last_checked = {"last_checked": time.time()}
