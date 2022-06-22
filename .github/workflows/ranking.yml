@@ -32,9 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
-      - name: Install dependencies
-        run: npm install
+
           
       - name: execute py script
         run: python get_rankings.py
@@ -55,6 +53,7 @@ jobs:
       - name: Build and deploy
         run: |
           cd volleyball_rankings
+          npm install
           npm run build
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
