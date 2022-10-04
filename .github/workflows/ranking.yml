@@ -2,7 +2,7 @@ name: ranking
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # runs every 60 minutes
+    - cron: '*/60 * * * *' # runs every 60 minutes
   push:
     branches:
       - main
