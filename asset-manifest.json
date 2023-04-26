@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/volleyball_rankings/static/css/main.2f02a639.css",
-    "main.js": "/volleyball_rankings/static/js/main.e223a7db.js",
+    "main.js": "/volleyball_rankings/static/js/main.08d465f6.js",
     "static/js/787.3a8696a7.chunk.js": "/volleyball_rankings/static/js/787.3a8696a7.chunk.js",
     "index.html": "/volleyball_rankings/index.html",
     "main.2f02a639.css.map": "/volleyball_rankings/static/css/main.2f02a639.css.map",
-    "main.e223a7db.js.map": "/volleyball_rankings/static/js/main.e223a7db.js.map",
+    "main.08d465f6.js.map": "/volleyball_rankings/static/js/main.08d465f6.js.map",
     "787.3a8696a7.chunk.js.map": "/volleyball_rankings/static/js/787.3a8696a7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2f02a639.css",
-    "static/js/main.e223a7db.js"
+    "static/js/main.08d465f6.js"
   ]
 }
