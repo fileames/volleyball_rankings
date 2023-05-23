@@ -190,8 +190,8 @@ function App() {
         <div class="col-md-4 d-flex align-items-center">
           <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
           </a>
-          <span class="mb-3 mb-md-0 text-muted">Created by <a href="https://www.linkedin.com/in/elif-sema-balc%C4%B1o%C4%9Flu-70a712146/">Elif Sema Balcıoğlu</a>
-| Using <a href="https://www.fivb.com/en/volleyball/rankings/seniorworldrankingwomen">FIVB</a> data</span>
+          <span class="mb-3 mb-md-0 text-muted">Created by <a href="https://www.linkedin.com/in/elif-sema-balc%C4%B1o%C4%9Flu-70a712146/" target="_blank">Elif Sema Balcıoğlu</a>
+            | Using <a href="https://www.fivb.com/en/volleyball/rankings/seniorworldrankingwomen" target="_blank">FIVB</a> data</span>
         </div>
 
       </footer>
