@@ -7,7 +7,7 @@ import last_time from './data/last_time.json'
 
 import AddDeleteTableRows from "./components/AddDeleteTableRows";
 import { erf, dotMultiply, sum } from 'mathjs'
-
+import {TwitterTweetEmbed} from 'react-twitter-embed'
 
 function App() {
 
@@ -25,6 +25,7 @@ function App() {
   const [womenCountryList, setWomenCountryList] = useState([]);
   const [rowsData, setRowsData] = useState([]);
   const [MWF, setMWF] = useState(50);
+
 
   useEffect(() => {
     var dict = new Object();
@@ -160,6 +161,25 @@ function App() {
             <AddDeleteTableRows countryList={countryList} rowsData={rowsData} setRowsData={setRowsData} setMWF={setMWF} MWF={MWF} />
             <button className='btn btn-primary' onClick={calculate}>Calculate New Scores</button>
             <div className="mt-5 mb-5"></div>
+
+
+
+            <div className='centerContent on-web' >
+              <h6>Share With Your Friends</h6>
+
+              <TwitterTweetEmbed onLoad={function noRefCheck() { }}
+                options={{
+                  cards: 'hidden',
+                  hideCard: true,
+                  hideThread: false,
+                  width: "50%",
+                  align: "center"
+                }}
+                tweetId="1662397513167519745" />
+
+            </div>
+
+
           </div>
           <div class="col-sm">
             <p>Last update: {timestamp}</p>
@@ -181,8 +201,24 @@ function App() {
                 }
               </tbody>
             </table>
-          </div>
 
+            
+
+        </div>
+          <div className='centerContent on-mobile' >
+            <h6>Share With Your Friends</h6>
+
+            <TwitterTweetEmbed onLoad={function noRefCheck() { }}
+              options={{
+                cards: 'hidden',
+                hideCard: true,
+                hideThread: false,
+                width: "80%",
+                align: "center"
+              }}
+              tweetId="1662397513167519745" />
+
+          </div>
         </div>
       </div>
 
