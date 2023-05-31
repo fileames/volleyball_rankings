@@ -11,7 +11,7 @@ import {TwitterTweetEmbed} from 'react-twitter-embed'
 
 function App() {
 
-  var C = [-1.060, -0.364, 0, 0.364, 1.060];
+  var C = [-1.060, -0.394, 0, 0.394, 1.060];
   var scores = [2, 1.5, 1, -1, -1.5, -2];
   let timestamp = timeConverter(last_time.last_checked)
 
@@ -101,8 +101,14 @@ function App() {
       }
 
       var exp = sum(dotMultiply(scores, Ps));
-      var WR = scores[parseInt(score)] - exp;
+      var sc = scores[parseInt(score)];
+      var WR = sc - exp;
       var point = WR * MWF / 8;
+
+
+      if (Math.sign(point) != Math.sign(sc)){
+        point = 0.01 * Math.sign(sc);
+      }
 
       clone[team1] = clone[team1] + point;
       clone[team2] = clone[team2] - point;
