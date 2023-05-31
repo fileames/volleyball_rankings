@@ -7,8 +7,8 @@ function AddDeleteTableRows({countryList, rowsData, setRowsData,setMWF,MWF}){
     const addTableRows = ()=>{
   
         const rowsInput={
-            team1:'USA',
-            team2:'USA',
+            team1:'Italy',
+            team2:'Italy',
             score:'0'  
         } 
         setRowsData([...rowsData, rowsInput])

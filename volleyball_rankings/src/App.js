@@ -202,7 +202,7 @@ function App() {
               <tbody>
                 {
                   Object.keys(countryData).map((key, index) => {
-                    return <tr key={index + 1}><th scope="row">{index + 1}</th><td>{key}</td> <td>{Math.round(realCountryData[key])}</td> <td>{Math.round(countryData[key])}</td> <td style={{ color: countColor(countryData[key] - realCountryData[key]) }}>{(countryData[key] - realCountryData[key]).toFixed(3)}</td></tr>
+                    return <tr key={index + 1}><th scope="row">{index + 1}</th><td>{key}</td> <td>{realCountryData[key]}</td> <td>{countryData[key].toFixed(2)}</td> <td style={{ color: countColor(countryData[key] - realCountryData[key]) }}>{(countryData[key] - realCountryData[key]).toFixed(3)}</td></tr>
                   })
                 }
               </tbody>

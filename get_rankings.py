@@ -2,27 +2,49 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import time
+from requests_html import HTMLSession
 
-URLS = ["https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=women",
-        "https://www.hypercube.nl/FIVB_ranking/ranking.php?gender=men"]
+
+URLS = ["https://en.volleyballworld.com/volleyball/world-ranking/women",
+        "https://en.volleyballworld.com/volleyball/world-ranking/men"]
+session = HTMLSession()
+
 
 for i, j in enumerate(["women", "men"]):
 
-    r = requests.get(URLS[i])
-    soup = BeautifulSoup(r.content, 'html.parser')
-    table = soup.find('table', attrs={'class': 'ranking_table'})
+    resp = session.get(URLS[i])
+    #resp.html.render()
+    #print("load-more-btn" in resp.html.html)
+    script = """
+       () => {
+                const item = document.getElementsByClassName("load-more-btn")[0];
+                if(item) {
+                    item.click()
+                }    
+        }
+         """
+    resp.html.render(sleep=10, script=script)
+
+    html = resp.html.html
+
+    soup = BeautifulSoup(html, 'html.parser')
+    table = soup.findAll('tbody', attrs={'class': 'vbw-ranking-page-table-body'})
 
     countries = []
-    for i, row in enumerate(table.findAll('tr')):
-        if i == 0:
-            continue
+    for i, row in enumerate(table):    
 
         item = dict()
 
-        country = row.findAll('td')[3].text
-        point = int(row.findAll('td')[4].text)
+        country = row.find("div", {"class": "vbw-mu__team__name-fed"}).text
+        point = row.find("td", {"class": "vbw-o-table__cell points"}).text
+        if point == '':
+            continue
+        
+        point = float(point)
+
         item["country"] = country
         item["point"] = point
+        
         countries.append(item)
 
     with open(f'volleyball_rankings/src/data/{j}_ranking_data.json', 'w') as fp:
