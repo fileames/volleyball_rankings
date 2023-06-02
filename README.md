@@ -1,5 +1,5 @@
 # FIVB Senior World Ranking - Women
-Points calculator for national womens volleyball matches. Calculations may not be exact since not every constant on formula is clear. 
+Points calculator for national womens volleyball matches. Calculations may not be exact since not every constant on formula is clear.
 
 More info on how to calculate:
 [https://www.fivb.com/en/volleyball/rankings/seniorworldrankingwomen](https://www.fivb.com/en/volleyball/rankings/seniorworldrankingwomen)
