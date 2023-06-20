@@ -23,7 +23,7 @@ for i, j in enumerate(["women", "men"]):
                 }    
         }
          """
-    resp.html.render(sleep=60, script=script)
+    resp.html.render(sleep=120, script=script)
 
     html = resp.html.html
 
