@@ -31,7 +31,6 @@ for i, j in enumerate(["women", "men"]):
             item["country"] = country
             item["point"] = point
             
-            print(item)
             countries.append(item)
 
     with open(f'volleyball_rankings/src/data/{j}_ranking_data.json', 'w') as fp:
