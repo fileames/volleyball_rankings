@@ -1,51 +1,38 @@
 import requests
-from bs4 import BeautifulSoup
 import json
 import time
-from requests_html import HTMLSession
 
 
-URLS = ["https://en.volleyballworld.com/volleyball/world-ranking/women",
-        "https://en.volleyballworld.com/volleyball/world-ranking/men"]
-session = HTMLSession()
+URLS = [["https://en.volleyballworld.com/api/v1/worldranking/volleyball/0/0/50","https://en.volleyballworld.com/api/v1/worldranking/volleyball/0/1/50"],
+        ["https://en.volleyballworld.com/api/v1/worldranking/volleyball/1/0/50","https://en.volleyballworld.com/api/v1/worldranking/volleyball/1/1/50"]]
+
 
 
 for i, j in enumerate(["women", "men"]):
 
-    resp = session.get(URLS[i])
-    #resp.html.render()
-    #print("load-more-btn" in resp.html.html)
-    script = """
-       () => {
-                const item = document.getElementsByClassName("load-more-btn")[0];
-                if(item) {
-                    item.click()
-                }    
-        }
-         """
-    resp.html.render(sleep=120, timeout=30, script=script)
-
-    html = resp.html.html
-
-    soup = BeautifulSoup(html, 'html.parser')
-    table = soup.findAll('tbody', attrs={'class': 'vbw-ranking-page-table-body'})
-
     countries = []
-    for i, row in enumerate(table):    
+    for url in URLS[i]:
 
-        item = dict()
-
-        country = row.find("div", {"class": "vbw-mu__team__name-fed"}).text
-        point = row.find("td", {"class": "vbw-o-table__cell points"}).text
-        if point == '':
-            continue
+        table = requests.get(url, 
+                    headers={'Accept': 'application/json'}).json()["teams"]
         
-        point = float(point)
-
-        item["country"] = country
-        item["point"] = point
         
-        countries.append(item)
+        for i, row in enumerate(table):    
+
+            item = dict()
+
+            country = row["federationName"]
+            point = row["decimalPoints"]
+            if point == '':
+                continue
+            
+            point = float(point)
+
+            item["country"] = country
+            item["point"] = point
+            
+            print(item)
+            countries.append(item)
 
     with open(f'volleyball_rankings/src/data/{j}_ranking_data.json', 'w') as fp:
         json.dump(countries, fp)
