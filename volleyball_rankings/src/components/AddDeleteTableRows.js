@@ -40,7 +40,6 @@ function AddDeleteTableRows({countryList, rowsData, setRowsData,setMWF,MWF}){
                 <div className="col-sm-12">
                     <h5>Select The Tournament</h5>
                     <select
-                    value={MWF}
                     onChange={handleTournamentChange} name="tournament" className="form-control"
                     >
                         <option value={"50"} >{"Olympic Games"}</option>
