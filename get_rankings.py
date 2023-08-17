@@ -28,7 +28,7 @@ for i, j in enumerate(["women", "men"]):
             
             point = float(point)
 
-            item["country"] = country
+            item["country"] = country 
             item["point"] = point
             
             countries.append(item)
